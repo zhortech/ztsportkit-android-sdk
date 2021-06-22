@@ -44,8 +44,13 @@ ZTSport.startActivity(ZTSportActivityAttributes(goal, goalValue))
 ### Activity data
 You can provide data of current activity by:
 ```kotlin
-ZTSport.addActivityData(timeStamp, activityData.toList())
+ZTSport.addActivityData(timeStamp, activityData)
 ```
+where `activityData` is a list of data that gather by application. In case of ZTSport pruduct it is:
+1. timesmapt is integer in seconds
+2. integer part of longitude multiplied by 1000000
+3. integer part of latitude multiplied by 1000000 
+4. 0 if activity was paused 1 otherwise
 ### Realtime data
 To request activity data in real time use:
 ```kotlin
@@ -79,3 +84,10 @@ ZTSport.getActivitySummary(activityId, fields, include)
             .subscribe(...)
 ```
 Where fields is array of of type `ZTSportActivitySummary.Fields`, and include array of additional attributes that listed in zcloud docs
+
+#### Activity segments
+After activity is processed on zt cloud app can request the list of segments. Each segment respond to the deffirent "grade" of activity portion and have assigned color to represent that grade.
+```kotlin
+ZTSport.getMapRouteData(activityId)
+```
+If during activity application provided data with location, each segments will have respording coordinates set, so you cand draw them onto map.
